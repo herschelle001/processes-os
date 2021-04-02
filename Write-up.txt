@@ -1,0 +1,27 @@
+To compile the program simple type make in the command line.
+This generates an executable file a.out which ready to be executed.
+
+We first use the open and read system call to open and read the csv file. 
+Open takes path of the file and format (Read or write etc).
+Read takes file descripter, pointer (to store the contents), number of bytes to read.
+
+If read returned -1 that means and error has occured and errno flag is set.
+We pass this errno flag in a function strerror to display the specific error occured. 
+
+Now I am storing i-th line of csv file in the i-th index in my array of char pointers declared at line 10,  
+
+Now we use fork system call which creates a child process of our program.
+If fork returns a negative value that means fork has fail and errno flag is set.
+We display the error and exit the program. 
+
+The child process gets assigned value 0.
+In the child process we use execvp system call to replace the child program by a program hello.c which is for printing the details of section A students.
+If execvp returns, that means error has occured and we print the error using errno flag.
+Execvp takes executable file of a program and array of char pointers.
+
+The parent waits for the child process to finish using the wait system call. If there were multiple processes and we wanted to wait for any particular processes then we could have used wait pid system call. 
+
+Now with the child and parent process we are reading all the lines we stored in our array named 'lines'.
+Each line contains id, section, marks of student.
+We average the marks and display.
+
